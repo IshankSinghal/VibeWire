@@ -54,6 +54,7 @@ const Profile = () => {
   const saveChanges = async () => {
     if (validateProfile()) {
       try {
+        console.log(firstName, lastName,selectedColor)
         const response = await apiClient.post(
           UPDATE_PROFILE_ROUTE,
           { firstName, lastName, color: selectedColor },

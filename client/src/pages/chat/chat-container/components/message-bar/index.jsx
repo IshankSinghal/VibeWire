@@ -3,13 +3,28 @@ import { GrAttachment } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import EmojiPicker, { Emoji } from "emoji-picker-react";
+import { useAppStore } from "@/store";
+import { useSocket } from "@/context/cocketContext.jsx";
 
 const MessageBar = () => {
   const emojiRef = useRef();
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const { selectedChatType, selectedChatData, userInfo } = useAppStore();
+  const socket = useSocket();
 
-  const handleSendMessage = async () => {};
+  const handleSendMessage = async () => {
+    if (selectedChatType === "contacts") {
+      socket.emit("sendMessage", {
+        sender: userInfo.id,
+        content: message,
+        recipient: selectedChatData._id,
+        messageType: "text",
+        fileUrl: undefined,
+      });
+      setMessage("");
+    }
+  };
 
   useEffect(() => {
     function handleOutsideClick(event) {
@@ -61,6 +76,7 @@ const MessageBar = () => {
         className=" flex items-center justify-center bg-[#8417ff] rounded-md p-5 hover:bg-[#741bda] 
         focus:bg-[#741bda] focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
         onClick={handleSendMessage}
+        
       >
         <IoSend className="text-2xl" />
       </button>

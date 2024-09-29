@@ -1,6 +1,6 @@
 import User from "../models/USerModel.js";
 
-export const searchContacts = async (request, response, next) => {
+export const getMessages = async (request, response, next) => {
   try {
     const { searchTerm } = request.body;
 
@@ -8,13 +8,6 @@ export const searchContacts = async (request, response, next) => {
     if (!searchTerm) {
       return response.status(400).send("Search term is required.");
     }
-
-    // Sanitize the search term to avoid regex special characters issues
-    const sanitizeSearchTerm = searchTerm.replace(
-      /[.*+?^${}()|[\]\\]/g,
-      "\\$&"
-    );
-    const regX = new RegExp(sanitizeSearchTerm, "i");
 
     // Find contacts based on the sanitized search term
     const contacts = await User.find({

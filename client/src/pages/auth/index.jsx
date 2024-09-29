@@ -9,7 +9,6 @@ import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { create } from "zustand";
 
 const Auth = () => {
   const navigate = useNavigate();

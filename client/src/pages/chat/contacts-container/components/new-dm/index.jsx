@@ -15,14 +15,45 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { animationDefaultOPtions } from "@/lib/utils";
+import { animationDefaultOPtions, getColor } from "@/lib/utils";
 import Lottie from "react-lottie";
+import { apiClient } from "@/lib/api-client";
+import { HOST, SEARCH_CONTACT } from "@/utils/constants";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useAppStore } from "@/store";
 
 const NewDm = () => {
   const [openNewContactModal, setOpenNewContactModal] = useState(false);
   const [serchedContacts, setSerchedContacts] = useState([]);
+  const { setSelectedChatType, setSelectedChatData } = useAppStore();
 
-  const searchContacts = async (searchTerm) => {};
+  const searchContacts = async (searchTerm) => {
+    try {
+      if (searchTerm.length > 0) {
+        const res = await apiClient.post(
+          SEARCH_CONTACT,
+          { searchTerm },
+          { withCredentials: true }
+        );
+        if (res.status === 200 && res.data.contacts) {
+          console.log(res.data.contacts);
+          setSerchedContacts(res.data.contacts);
+        }
+      } else {
+        setSerchedContacts([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectNewContact = (contacts) => {
+    setOpenNewContactModal(false);
+    setSelectedChatType("contacts");
+    setSelectedChatData(contacts);
+    setSerchedContacts([]);
+  };
 
   return (
     <>
@@ -54,8 +85,53 @@ const NewDm = () => {
               onChange={(e) => searchContacts(e.target.value)}
             />
           </div>
+          {serchedContacts.length > 0 && (
+            <ScrollArea className="h-[250px]">
+              <div className="flex flex-col gap-5">
+                {serchedContacts.map((contacts) => (
+                  <div
+                    key={contacts._id}
+                    className="flex gap-3 items-center cursor-pointer"
+                    onClick={() => selectNewContact(contacts)}
+                  >
+                    <div className="w-12 h-12 relative ">
+                      <Avatar className="h-12 w-12 rounded-full overflow-hidden ">
+                        {contacts ? (
+                          <AvatarImage
+                            src={`${HOST}/${contacts.image}`}
+                            alt="profile"
+                            className="object-cover h-full w-full bg-black rounded-full"
+                          />
+                        ) : (
+                          <div
+                            className={`uppercase h-12 w-12 text-3xl font-mono border-[1px] flex items-center justify-center rounded-full ${getColor(
+                              contacts.color
+                            )}`}
+                          >
+                            {contacts.firstName
+                              ? contacts.firstName.split("").shift()
+                              : contacts.email.split("").shift()}
+                          </div>
+                        )}
+                      </Avatar>
+                    </div>
+                    <div className="flex flex-col">
+                      <span>
+                        {contacts.firstName && contacts.lastName
+                          ? `${contacts.firstName} ${contacts.lastName}`
+                          : contacts.email}
+                      </span>
+                      <span>
+                        <div className="text-xs">{contacts.email}</div>
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          )}
           {serchedContacts.length == 0 && (
-            <div className="flex-1 md:bg-[#1c1d25] rounded-md md:flex flex-col items-center justify-center duration-1000 transition-all mt-5">
+            <div className="flex-1  rounded-md md:flex md:mt-0 flex-col items-center justify-center duration-1000 transition-all mt-5">
               <Lottie
                 isClickToPauseDisabled={true}
                 height={100}

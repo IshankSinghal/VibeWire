@@ -20,7 +20,6 @@ export const signup = async (request, response, next) => {
     if (!email || !password) {
       return response.status(400).send("Email and Password Required!");
     }
-
     const user = await User.create({ email, password });
     response.cookie("jwt", createToken(email, user.id), {
       maxAge,
@@ -46,15 +45,16 @@ export const login = async (request, response, next) => {
     if (!email || !password) {
       return response.status(400).send("Email and Password Required!");
     }
-
+    
     //FOR LOG IN WE WILL CHECK IF THE USER ALREADY REGISTERED OR NOT...
     const user = await User.findOne({ email });
     if (!user) {
       return response.status(404).send("User not registered!");
     }
-
+    
     //HERE WE CHECK IF THE PASSWORD ENTERED CORRECT OR NOT...
     const auth = await compare(password, user.password);
+    // console.log(user.password +"/"+ password );
     if (!auth) {
       return response.status(400).send("Password Incorrect!");
     }
