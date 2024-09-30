@@ -32,6 +32,7 @@ export const searchContacts = async (request, response, next) => {
     return response.status(500).send("Internal Server Error");
   }
 };
+
 export const getContactsDMList = async (request, response, next) => {
   try {
     let { userId } = request;
@@ -84,6 +85,27 @@ export const getContactsDMList = async (request, response, next) => {
         $sort: { lastMessageTime: -1 },
       },
     ]);
+
+    return response.status(200).json({ contacts });
+  } catch (error) {
+    console.error("Error occurred while searching contacts:", error);
+    return response.status(500).send("Internal Server Error");
+  }
+};
+
+export const getAllContacts = async (request, response, next) => {
+  try {
+    const users = await User.find(
+      { _id: { $ne: request.userId } },
+      "firstName lastName _id email"
+    );
+
+    const contacts = users.map((user) => ({
+      label: user.firstName
+        ? `${user.firstName} ${user.lastName}`
+        : `user.email`,
+      value: user._id,
+    }));
 
     return response.status(200).json({ contacts });
   } catch (error) {

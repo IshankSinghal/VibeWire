@@ -1,6 +1,10 @@
 import { apiClient } from "@/lib/api-client";
 import { useAppStore } from "@/store";
-import { GET_ALL_MESSAGES_ROUTE, HOST } from "@/utils/constants";
+import {
+  GET_ALL_MESSAGES_ROUTE,
+  GET_CHANNEL_MESSAGES_ROUTES,
+  HOST,
+} from "@/utils/constants";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { MdFolderZip } from "react-icons/md";
@@ -42,11 +46,26 @@ const MessageContainer = () => {
         console.log(error);
       }
     };
+    const getChannelMessages = async () => {
+      try {
+        const response = await apiClient.get(
+          `${GET_CHANNEL_MESSAGES_ROUTES}/${selectedChatData._id}`,
+          { withCredentials: true }
+        );
+
+        if (response.data.messages) {
+          console.log(response);
+          setSelectedChatMessage(response.data.messages);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     if (selectedChatData._id) {
       if (selectedChatType === "contacts") {
         getMessages();
-      }
+      } else if (selectedChatType === "channel") getChannelMessages();
     }
   }, [selectedChatData, selectedChatType, setSelectedChatMessage]);
 
