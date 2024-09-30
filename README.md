@@ -16,14 +16,18 @@ State Management: Utilizes efficient state management with useAppStore for handl
 
 
 Frontend
-
 React with Vite for fast development
+
 React Router: For managing client-side routing and navigation
+
 Radix UI: For sophisticated, accessible UI components
+
 Axios: For API communication
+
 WebSocket Integration: Real-time updates through SocketProvider
+
 Backend (Details to be added once available)
-Likely to include support for WebSocket communication, REST APIs, and user authentication
+
 
 ## 📦 **Getting Started**
 
