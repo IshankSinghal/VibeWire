@@ -6,10 +6,15 @@ Chatting is a feature-rich real-time chat application built using React, Vite, a
 ## 🚀 **Features**
 
 Real-Time Chat: Engage in real-time conversations with other users using WebSocket.
+
 User Authentication: Secure login and registration functionality.
+
 Profile Management: View and update user profiles.
+
 Responsive Design: Optimized for different screen sizes using Radix UI components.
+
 Notification System: Integrated notification toaster for in-app alerts.
+
 State Management: Utilizes efficient state management with useAppStore for handling application state.
 
 ## 🛠️ **Technologies Used**
@@ -32,20 +37,21 @@ Backend (Details to be added once available)
 ## 📦 **Getting Started**
 
 Client Setup
+
 Clone the repository:
-bash
+
 Copy code
 git clone <repo-url>
 Navigate to the client directory:
-bash
+
 Copy code
 cd vibeWire-main/client
 Install dependencies:
-bash
+
 Copy code
 npm install
 Start the client application:
-bash
+
 Copy code
 npm run dev
 
