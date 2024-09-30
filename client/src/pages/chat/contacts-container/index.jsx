@@ -1,7 +1,27 @@
+import { useEffect } from "react";
 import NewDm from "./components/new-dm";
 import ProfileInfo from "./components/profile-container";
+import { apiClient } from "@/lib/api-client";
+import { GET_DM_CONTACTS_ROUTE } from "@/utils/constants";
+import { useAppStore } from "@/store";
+import ContactList from "@/components/contact-list";
 
 const ContactsContainer = () => {
+  const { setDirectMessagesContacts, directMessagesContacts } = useAppStore();
+
+  useEffect(() => {
+    const getContacts = async () => {
+      const response = await apiClient.get(GET_DM_CONTACTS_ROUTE, {
+        withCredentials: true,
+      });
+
+      if (response.data.contacts) {
+        setDirectMessagesContacts(response.data.contacts);
+      }
+    };
+    getContacts();
+  }, []);
+
   return (
     <div
       className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] 
@@ -13,16 +33,19 @@ const ContactsContainer = () => {
       <div className="my-5">
         <div className="flex items-center justify-between pr-10 ">
           <Title text={"Direct Messages"} />
-          <NewDm/>
+          <NewDm />
+        </div>
+        <div className="max-h-[30vh] overflow-y-auto scrollbar-hidden ">
+          <ContactList contacts={directMessagesContacts} />
         </div>
       </div>
-      
+
       <div className="my-5">
         <div className="flex items-center justify-between pr-10 ">
           <Title text={"Channels"} />
         </div>
       </div>
-      <ProfileInfo/>
+      <ProfileInfo />
     </div>
   );
 };

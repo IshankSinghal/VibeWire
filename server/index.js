@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/Authroutes.js";
 import contactRoutes from "./routes/ContactRoutes.js";
 import setupSocket from "./socket.js";
+import messagesRoute from "./routes/MessagesRoute.js";
 
 dotenv.config();
 
@@ -22,19 +23,20 @@ app.use(
   })
 );
 
-app.use("/uploads/profiles", express.static("/uploads/profiles"));
+app.use("/uploads/profiles", express.static("uploads/profiles"));
+app.use("/uploads/files", express.static("uploads/files"));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoutes);
+app.use("/api/messages", messagesRoute);
 
 const server = app.listen(port, () => {
   console.log(`Server Started at http://localhost:${port}`);
 });
 
-
-setupSocket(server)
+setupSocket(server);
 
 mongoose
   .connect(databaseURL)

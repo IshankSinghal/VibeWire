@@ -1,25 +1,46 @@
-import User from "../models/USerModel.js";
+import Message from "../models/MessagesModel.js ";
+import { mkdirSync, renameSync } from "fs";
 
 export const getMessages = async (request, response, next) => {
   try {
-    const { searchTerm } = request.body;
-
-    // Check if search term is missing
-    if (!searchTerm) {
-      return response.status(400).send("Search term is required.");
+    const user1 = request.userId;
+    const user2 = request.body.id;
+    if (!user1 || !user2) {
+      return response.status(400).send("Both Usser IDs are required.");
     }
 
-    // Find contacts based on the sanitized search term
-    const contacts = await User.find({
-      $and: [
-        { _id: { $ne: request.userId } }, // Exclude the requesting user
-        { $or: [{ firstName: regX }, { lastName: regX }, { email: regX }] }, // Search by name or email
+    const messages = await Message.find({
+      $or: [
+        { sender: user1, recipient: user2 },
+        { sender: user2, recipient: user1 },
       ],
-    });
+    }).sort({ timestamp: 1 });
 
-    return response.status(200).json({ contacts });
+    return response.status(200).json({ messages });
   } catch (error) {
     console.error("Error occurred while searching contacts:", error);
+    return response.status(500).send("Internal Server Error");
+  }
+};
+
+export const uploadFile = async (request, response, next) => {
+  try {
+    // Check if the file exists in the request
+    if (!request.file) {
+      return response.status(400).send("File is required");
+    }
+
+    const date = Date.now();
+    let fileDir = `uploads/files/${date}`;
+    let fileName = `${fileDir}/${request.file.originalname}`;
+
+    mkdirSync(fileDir, { recursive: true });
+    renameSync(request.file.path, fileName);
+
+    // Respond with success and the new file path
+    return response.status(200).json({ filePath: fileName });
+  } catch (error) {
+    console.error("Error occurred during file upload:", error);
     return response.status(500).send("Internal Server Error");
   }
 };
