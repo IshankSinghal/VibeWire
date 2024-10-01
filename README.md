@@ -2,7 +2,7 @@
 
 # VibeWire - *A Full-Stack Real-Time ChatApp*
 
- ***VibeWire*** is a feature-rich real-time chat application built using React, Vite, and >Radix UI components on the client side, combined with a backend that supports >WebSocket-based communication. It offers users a seamless experience with features like >authentication, real-time messaging, user profile management, and notifications.
+ ***VibeWire*** is a feature-rich real-time chat application built using React, Vite, and ShadCN UI components on the client side, combined with a backend that supports WebSocket-based communication. It offers users a seamless experience with features like authentication, real-time messaging, user profile management, and notifications.
 
 
 ## 🚀 Features
