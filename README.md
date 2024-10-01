@@ -24,7 +24,7 @@ Vibeire is a feature-rich real-time chat application built using React, Vite, an
 
 * WebSocket Integration: Real-time updates through SocketProvider
 
-* Backend (Details to be added once available)
+**Backend** 
 
 
 ## 📦 **Getting Started**
