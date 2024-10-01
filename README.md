@@ -47,9 +47,9 @@
 
 Clone the repository :
 
-```bash
-  git clone https://github.com/yourusername/yourproject.git
-```
+> ```bash
+>   git clone https://github.com/yourusername/yourproject.git
+> ```
 
 Navigate to the project directory :
 
