@@ -37,6 +37,16 @@ export const uploadFile = async (request, response, next) => {
     mkdirSync(fileDir, { recursive: true });
     renameSync(request.file.path, fileName);
 
+    const newMessage = new Message({
+      sender: request.userId,
+      recipient: request.body.recipientId, // or channelId if it's a channel message
+      fileUrl: fileName,
+      messageType: "file",
+      timestamp: new Date(),
+    });
+
+    await newMessage.save();
+
     // Respond with success and the new file path
     return response.status(200).json({ filePath: fileName });
   } catch (error) {

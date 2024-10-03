@@ -74,11 +74,11 @@ export const getContactsDMList = async (request, response, next) => {
         $project: {
           _id: 1,
           lastMessageTime: 1,
+          email: "$contactInfo.email",
           firstName: "$contactInfo.firstName",
           lastName: "$contactInfo.lastName",
           image: "$contactInfo.image",
           color: "$contactInfo.color",
-          email: "$contactInfo.email",
         },
       },
       {

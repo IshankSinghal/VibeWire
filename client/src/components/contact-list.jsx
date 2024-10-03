@@ -15,7 +15,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
   const handleClick = (contact) => {
     if (isChannel) {
       setSelectedChatType("channel");
-    } else setSelectedChatType("contact");
+    } else setSelectedChatType("contacts");
 
     setSelectedChatData(contact);
 
@@ -31,12 +31,10 @@ const ContactList = ({ contacts, isChannel = false }) => {
           key={contact._id}
           className={`pl-10 py-2 transition-all duration-300 cursor-pointer ${
             selectedChatData && selectedChatData._id === contact._id
-              ? "bg-purple-600" 
+              ? "bg-purple-600"
               : "hover:bg-gray-100/10"
           }`}
-          onClick={() => {
-            handleClick(contact);
-          }}
+          onClick={() => handleClick(contact)}
         >
           <div className="flex gap-5 items-center justify-start text-neutral-300">
             {!isChannel && (

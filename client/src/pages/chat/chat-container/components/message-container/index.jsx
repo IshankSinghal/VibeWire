@@ -39,7 +39,7 @@ const MessageContainer = () => {
         );
 
         if (response.data.messages) {
-          console.log(response);
+          console.log("Messages:", response.data.messages);
           setSelectedChatMessage(response.data.messages);
         }
       } catch (error) {
@@ -126,16 +126,16 @@ const MessageContainer = () => {
               : "bg-[#2a2b33]/5 text-white/80 border-white/20"
           } border inline-block p-4 rounded-xl break-words max-w-[50%] my-1`}
         >
-          {checkImage(message.fileURl) ? (
+          {checkImage(message.fileUrl) ? (
             <div
               className=" cursor-pointerpo"
               onClick={() => {
                 setShowImage(true);
-                imageURL(message.filePath);
+                setImageURL(message.fileUrl);
               }}
             >
               <img
-                src={`${HOST}/${message.fileURl}`}
+                src={`${HOST}/${message.fileUrl}`}
                 height={300}
                 width={300}
               />
@@ -145,11 +145,11 @@ const MessageContainer = () => {
               <span className=" text-white/80 text-3xl bg-black/20 rounded-full p-3">
                 <MdFolderZip />
               </span>
-              <span>{message.fileURl.split("/").pop()}</span>
+              <span>{message.fileUrl.split("/").pop()}</span>
               <span
                 className=" bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 transition-all duration-300"
                 onClick={() => {
-                  downloadFile(message.fileURl);
+                  downloadFile(message.fileUrl);
                 }}
               >
                 <IoMdArrowRoundDown />
@@ -190,7 +190,7 @@ const MessageContainer = () => {
                 : "bg-[#2a2b33]/5 text-white/80 border-white/20"
             } border inline-block p-4 rounded-xl break-words max-w-[50%] my-1`}
           >
-            {checkImage(message.fileURl) ? (
+            {checkImage(message.fileUrl) ? (
               <div
                 className=" cursor-pointerpo"
                 onClick={() => {
@@ -199,7 +199,7 @@ const MessageContainer = () => {
                 }}
               >
                 <img
-                  src={`${HOST}/${message.fileURl}`}
+                  src={`${HOST}/${message.fileUrl}`}
                   height={300}
                   width={300}
                 />
@@ -209,11 +209,11 @@ const MessageContainer = () => {
                 <span className=" text-white/80 text-3xl bg-black/20 rounded-full p-3">
                   <MdFolderZip />
                 </span>
-                <span>{message.fileURl.split("/").pop()}</span>
+                <span>{message.fileUrl.split("/").pop()}</span>
                 <span
                   className=" bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 transition-all duration-300"
                   onClick={() => {
-                    downloadFile(message.fileURl);
+                    downloadFile(message.fileUrl);
                   }}
                 >
                   <IoMdArrowRoundDown />
