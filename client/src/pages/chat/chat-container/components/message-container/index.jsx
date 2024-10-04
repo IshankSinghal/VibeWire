@@ -18,6 +18,7 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 const MessageContainer = () => {
   const scrollRef = useRef();
   const {
+    userInfo,
     selectedChatType,
     selectedChatData,
     selectedChatMessage,
@@ -48,13 +49,13 @@ const MessageContainer = () => {
     };
     const getChannelMessages = async () => {
       try {
-        const response = await apiClient.get(
-          `${GET_CHANNEL_MESSAGES_ROUTES}/${selectedChatData._id}`,
-          { withCredentials: true }
-        );
+        const url = `${GET_CHANNEL_MESSAGES_ROUTES}/${selectedChatData._id}`;
+        console.log("Fetching channel messages from:", url);
 
+        const response = await apiClient.get(url, { withCredentials: true });
+        console.log(response);
         if (response.data.messages) {
-          console.log(response);
+          console.log(response.data.messages);
           setSelectedChatMessage(response.data.messages);
         }
       } catch (error) {
@@ -185,7 +186,7 @@ const MessageContainer = () => {
         {message.messageType === "file" && (
           <div
             className={`${
-              message.sender._id === userInfo.id
+              message.sender_id === userInfo.id
                 ? "bg-[#8417ff]/5 text-[#8417ff]/90 border-[#8417ff]/50"
                 : "bg-[#2a2b33]/5 text-white/80 border-white/20"
             } border inline-block p-4 rounded-xl break-words max-w-[50%] my-1`}
@@ -305,7 +306,7 @@ const MessageContainer = () => {
             <button
               className=" bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 transition-all duration-300"
               onClick={() => {
-                setShowImage(true);
+                setShowImage(false);
                 imageURL(message.filePath);
               }}
             >

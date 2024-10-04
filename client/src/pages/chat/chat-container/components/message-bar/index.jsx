@@ -31,12 +31,10 @@ const MessageBar = () => {
         messageType: "text",
         fileUrl: undefined,
       });
-      setMessage("");
     } else if (selectedChatType === "channel") {
       socket.emit("send-channel-message", {
         sender: userInfo.id,
         content: message,
-        recipient: selectedChatData._id,
         channelId: selectedChatData._id,
         messageType: "text",
         fileUrl: undefined,
@@ -57,7 +55,6 @@ const MessageBar = () => {
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-       
 
         setIsUploading(true);
         const response = await apiClient.post(UPLOAD_FILE_ROUTE, formData, {
@@ -86,6 +83,7 @@ const MessageBar = () => {
               fileUrl: response.data.filePath,
             });
           }
+          setMessage("");
         }
       }
       console.log({ file });

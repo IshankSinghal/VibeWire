@@ -67,7 +67,7 @@ const setupSocket = (server) => {
 
     const channel = await Channel.findById(channelId).populate("members");
 
-    const finalData = { ...messageData._doc, channelId: channelId._id };
+    const finalData = { ...messageData._doc, channelId: channel._id };
 
     if (channel && channel.members) {
       channel.members.forEach((member) => {
