@@ -70,7 +70,7 @@ Start the server :
 Clone the repository :
 
 > ```bash
->   git clone https://github.com/yourusername/yourproject.git
+>   git clone https://github.com/IshankSinghal/VibeWire.git
 > ```
 
 Navigate to the project directory :
