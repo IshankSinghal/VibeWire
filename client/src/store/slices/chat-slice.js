@@ -4,11 +4,13 @@ export const createChatSlice = (set, get) => ({
   selectedChatMessage: [],
 
   directMessagesContacts: [],
+  channels: [],
 
   isUploading: false,
   isDownloading: false,
   fileUploadProgress: 0,
   fileDownloadProgress: 0,
+  wallpaper: "",
 
   setIsUploading: (isUploading) => set({ isUploading }),
   setIsDownloading: (isDownloading) => set({ isDownloading }),
@@ -16,7 +18,6 @@ export const createChatSlice = (set, get) => ({
   setFileDownloadProgress: (fileDownloadProgress) =>
     set({ fileDownloadProgress }),
 
-  channels: [],
   setChannel: (channels) => set({ channels }),
 
   setSelectedChatType: (selectedChatType) => set({ selectedChatType }),
@@ -26,6 +27,8 @@ export const createChatSlice = (set, get) => ({
 
   setDirectMessagesContacts: (directMessagesContacts) =>
     set({ directMessagesContacts }),
+
+  setWallpaper: (wallpaper) => set({ wallpaper }),
 
   addChannel: (channel) => {
     const channels = get().channels;
@@ -38,6 +41,7 @@ export const createChatSlice = (set, get) => ({
       selectedChatType: undefined,
       selectedChatMessage: [],
     }),
+
   addMessage: (message) => {
     const selectedChatMessage = get().selectedChatMessage;
     const selectedChatType = get().selectedChatType;
@@ -59,6 +63,7 @@ export const createChatSlice = (set, get) => ({
       ],
     });
   },
+
   addChannelInChannelList: (message) => {
     const channels = get().channels;
     const data = channels.find((channel) => channel._id === message.channelId);
@@ -70,6 +75,7 @@ export const createChatSlice = (set, get) => ({
       channels.unshift(data);
     }
   },
+
   addContactsInDMContacts: (message) => {
     const userId = get().userInfo.id;
     const fromId =

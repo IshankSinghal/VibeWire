@@ -8,7 +8,6 @@ import contactRoutes from "./routes/ContactRoutes.js";
 import setupSocket from "./socket.js";
 import messagesRoute from "./routes/MessagesRoute.js";
 import channelRoute from "./routes/ChannelRoute.js";
-
 dotenv.config();
 
 const app = express();

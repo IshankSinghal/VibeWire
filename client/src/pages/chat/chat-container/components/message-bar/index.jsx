@@ -110,8 +110,8 @@ const MessageBar = () => {
   };
 
   return (
-    <div className=" h-[10vh] bg-[#1c1d25] flex items-center justify-center px-6 mb-5 gap-6 ">
-      <div className="flex-1 flex bg-[#2a2b33] rounded-md items-center gap-5 pr-5">
+    <div className=" h-[8vh] bg-[#1c1d25] flex items-center justify-center px-6 gap-3 ">
+      <div className="h-[6vh] flex-1 flex bg-[#2a2b33] rounded-full items-center gap-4 pr-5 ">
         <input
           placeholder="Type Message"
           type="text"
@@ -149,7 +149,7 @@ const MessageBar = () => {
         </div>
       </div>
       <button
-        className=" flex items-center justify-center bg-[#8417ff] rounded-md p-5 hover:bg-[#741bda] 
+        className="h-[5vh] flex items-center justify-center bg-[#8417ff] rounded-full p-5 hover:bg-[#741bda] 
         focus:bg-[#741bda] focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
         onClick={handleSendMessage}
       >

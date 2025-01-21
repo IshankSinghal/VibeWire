@@ -8,9 +8,9 @@ import { getColor } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { HOST, LOGOUT_ROUTE } from "@/utils/constants";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { FiEdit2 } from "react-icons/fi";
+import { LiaUserEditSolid } from "react-icons/lia";
 import { Navigate, useNavigate } from "react-router-dom";
-import { IoLogOut, IoPowerSharp } from "react-icons/io5";
+import { ImExit } from "react-icons/im";
 import { apiClient } from "@/lib/api-client";
 
 const ProfileInfo = () => {
@@ -25,9 +25,9 @@ const ProfileInfo = () => {
         { withCredentials: true }
       );
 
-      if(response.status === 200){
-        navigate("/auth")
-        setUserInfo(null)
+      if (response.status === 200) {
+        navigate("/auth");
+        setUserInfo(null);
       }
     } catch (error) {
       console.log(error);
@@ -37,9 +37,9 @@ const ProfileInfo = () => {
   return (
     <div
       className="flex items-center justify-between absolute 
-    h-16 bottom-0 px-10 w-full bg-[#2a2b33] "
+    h-[8vh] bottom-0 px-10 w-full bg-[#2a2b33] "
     >
-      <div className="flex gap-3 items-center justify-center ">
+      <div className="flex gap-3 items-center justify-center">
         <div className="w-12 h-12 relative ">
           <Avatar className="h-12 w-12 rounded-full overflow-hidden ">
             {userInfo.image ? (
@@ -71,10 +71,12 @@ const ProfileInfo = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <FiEdit2
-                className="text-purple-500 text-xl font-medium"
-                onClick={() => navigate("/profile")}
-              />
+              <div className="bg-white p-[5px] rounded-lg  shadow-lg">
+                <LiaUserEditSolid
+                  className="text-purple-700 text-xl font-medium "
+                  onClick={() => navigate("/profile")}
+                />
+              </div>
             </TooltipTrigger>
             <TooltipContent className="bg-[#1c1b1e] border-none text-white">
               <p>Edit Profile</p>
@@ -84,10 +86,12 @@ const ProfileInfo = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <IoPowerSharp
-                className="text-red-600 text-2xl font-medium"
-                onClick={logOut}
-              />
+              <div className="bg-white p-[5px] rounded-md">
+                <ImExit
+                  className="text-red-600 text-xl font-medium"
+                  onClick={logOut}
+                />
+              </div>
             </TooltipTrigger>
             <TooltipContent className="bg-[#1c1b1e] border-none text-white">
               <p>Log Out</p>

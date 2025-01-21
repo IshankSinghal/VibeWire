@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { IoArrowBack } from "react-icons/io5";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import { IconBase } from "react-icons";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { colors, getColor } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -54,7 +53,7 @@ const Profile = () => {
   const saveChanges = async () => {
     if (validateProfile()) {
       try {
-        console.log(firstName, lastName,selectedColor)
+        console.log(firstName, lastName, selectedColor);
         const response = await apiClient.post(
           UPDATE_PROFILE_ROUTE,
           { firstName, lastName, color: selectedColor },
@@ -99,7 +98,13 @@ const Profile = () => {
           }
         );
         if (response.status === 200 && response.data.image) {
+          // const imageUrl = `${HOST}/${response.data.image}`; // Prepend HOST to image
           setUserInfo({ ...userInfo, image: response.data.image });
+
+          console.log("User info image:", userInfo.image); // Check the image path
+          console.log("Image URL being set:", image);
+
+          // setImage(imageUrl); // Set full URL in image state
           toast.success("Image Updated Successfully!");
         }
       }
@@ -126,14 +131,14 @@ const Profile = () => {
 
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
-      <div className="flex flex-col gap-10 w-[80vw] md:w-max  ">
+      <div className="flex flex-col gap-10 w-[80vw] md:w-max  bg-white/10 p-9 rounded-lg">
         <div>
           <div onClick={handleNavigate}>
-            <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer transition-all duration-300 hover:scale-125" />
+            <IoArrowBack className="text-4xl lg:text-4xl text-white cursor-pointer transition-all duration-300 hover:scale-125" />
           </div>
-          <div className="grid grid-cols-2 ">
+          <div className="flex flex-col items-center justify-center ">
             <div
-              className="h-full w-32 md:w-48 md:h-48 relative flex items-center justify-center "
+              className="h-full w-32 md:w-48 md:h-48 relative flex items-center justify-center mb-5"
               onMouseEnter={() => sethover(true)}
               onMouseLeave={() => sethover(false)}
             >
@@ -170,7 +175,7 @@ const Profile = () => {
                   )}
                 </div>
               )}
-              <input
+              <Input
                 type="file"
                 ref={fileInputRef}
                 className="hidden"
@@ -186,7 +191,7 @@ const Profile = () => {
                   type="email"
                   disabled
                   value={userInfo.email}
-                  className=" rounded-2xl p-6 bg-[#2c2e3b] border-none"
+                  className=" rounded-2xl p-6 bg-[#1f212c] border"
                 />
               </div>
               <div className=" w-full">
@@ -195,7 +200,7 @@ const Profile = () => {
                   type="text"
                   onChange={(e) => setFirstName(e.target.value)}
                   value={firstName}
-                  className="text-lg rounded-2xl p-6 bg-[#2c2e3b] border-none"
+                  className="text-lg rounded-2xl p-6 bg-[#1f212c] border"
                 />
               </div>
               <div className=" w-full">
@@ -204,7 +209,7 @@ const Profile = () => {
                   type="text"
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
-                  className="text-lg rounded-2xl p-6 bg-[#2c2e3b] border-none"
+                  className="text-lg rounded-2xl p-6 bg-[#1f212c] border"
                 />
               </div>
               <div className="w-full flex gap-5">

@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  wallpaper: {
+    type: String,
+    required: false,
+  },
   profileSetup: {
     type: Boolean,
     required: false,

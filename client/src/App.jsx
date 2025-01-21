@@ -11,7 +11,7 @@ import { GET_USER_INFO } from "./utils/constants";
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
   // Check if userInfo exists for authenticated users
-  
+
   const isAuthenticated = !!userInfo; // Check if userInfo exists for authenticated users
   return isAuthenticated ? children : <Navigate to="/auth" />;
 };
@@ -29,6 +29,7 @@ const App = () => {
 
   useEffect(() => {
     const getUserData = async () => {
+      console.log("in try");
       try {
         const response = await apiClient.get(GET_USER_INFO, {
           withCredentials: true,
@@ -39,7 +40,6 @@ const App = () => {
         } else {
           setUserInfo(undefined);
         }
-        
       } catch (error) {
         setUserInfo(undefined);
       } finally {

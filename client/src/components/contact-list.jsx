@@ -61,8 +61,8 @@ const ContactList = ({ contacts, isChannel = false }) => {
               </Avatar>
             )}
             {isChannel && (
-              <div className="bg-white/20 h-10 w-10 flex items-center justify-center rounded-full">
-                #
+              <div className="bg-white/80 h-10 w-10 ring-2 flex items-center justify-center rounded-full">
+                <img src="/groupChatIcon.png" className="h-6 w-6 " />
               </div>
             )}
             {isChannel ? (

@@ -19,6 +19,7 @@ const MessageContainer = () => {
   const scrollRef = useRef();
   const {
     userInfo,
+    wallpaper,
     selectedChatType,
     selectedChatData,
     selectedChatMessage,
@@ -30,6 +31,7 @@ const MessageContainer = () => {
   const [showImage, setShowImage] = useState(false);
   const [imageURL, setImageURL] = useState(null);
 
+  //Fetching Past Messages, Effect Hook
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -50,9 +52,10 @@ const MessageContainer = () => {
     const getChannelMessages = async () => {
       try {
         const url = `${GET_CHANNEL_MESSAGES_ROUTES}/${selectedChatData._id}`;
+        console.log(selectedChatData._id);
         console.log("Fetching channel messages from:", url);
 
-        const response = await apiClient.get(url, { withCredentials: true });
+        const response = await apiClient.post(url, { withCredentials: true });
         console.log(response);
         if (response.data.messages) {
           console.log(response.data.messages);
@@ -76,12 +79,18 @@ const MessageContainer = () => {
     }
   }, [selectedChatMessage]);
 
+  useEffect(()=>{
+    
+  },[wallpaper])
+
+  //Image Message Verify RegEx
   const checkImage = (filePath) => {
     const imageRegX =
       /\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg|ico|heic|heif)$/i;
     return imageRegX.test(filePath);
   };
 
+  //Rendering Past Messages for DMs/Channels.
   const renderMessages = () => {
     let lastDate = null;
     return selectedChatMessage.map((message, index) => {
@@ -91,8 +100,10 @@ const MessageContainer = () => {
       return (
         <div key={index}>
           {showDate && (
-            <div className=" text-center text-gray-500 my-2">
-              {moment(message.timestamp).format("LL")}
+            <div className="text-white/80 text-center text-gray my-2 border-t-[2px] border-gray-600 flex justify-center py-3">
+              <div className="border border-white/50 p-[5px] px-3 rounded-md bg-white/10">
+                {moment(message.timestamp).format("LL")}
+              </div>
             </div>
           )}
           {selectedChatType === "contacts" && renderDMMessage(message)}
@@ -112,8 +123,8 @@ const MessageContainer = () => {
         <div
           className={`${
             message.sender !== selectedChatData._id
-              ? "bg-[#8417ff]/5 text-[#8417ff]/90 border-[#8417ff]/50"
-              : "bg-[#2a2b33]/5 text-white/80 border-white/20"
+              ? "bg-[#8417ff] text-white font-semibold border-[#8417ff] "
+              : "bg-[#2a2b33] text-white font-semibold border-[#2a2b33]"
           } border inline-block p-4 rounded-xl break-words max-w-[50%] my-1`}
         >
           {message.content}
@@ -159,7 +170,7 @@ const MessageContainer = () => {
           )}
         </div>
       )}
-      <div className="text-xs text-gray-600 ">
+      <div className="text-xs text-gray-400 ">
         {moment(message.timestamp).format("LT")}
       </div>
     </div>
@@ -260,6 +271,7 @@ const MessageContainer = () => {
     );
   };
 
+  //Download Files/Images.
   const downloadFile = async (url) => {
     setIsDownloading(true);
     setFileDownloadProgress(0);
@@ -285,7 +297,14 @@ const MessageContainer = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto scrollbar-hidden p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw] w-full ">
+    <div
+      className="flex-1 overflow-y-auto no-scrollbar p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw] w-full"
+      style={{
+        backgroundImage: `url(${wallpaper})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       {renderMessages()}
       <div className="flex" ref={scrollRef} />
       {showImage && (
