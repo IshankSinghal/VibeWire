@@ -24,5 +24,4 @@ export const animationDefaultOPtions={
   loop: true,
   autoplay: true,
   animationData, 
-
 }

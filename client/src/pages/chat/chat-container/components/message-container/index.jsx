@@ -10,7 +10,6 @@ import { useEffect, useRef, useState } from "react";
 import { MdFolderZip } from "react-icons/md";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
-import { UserIcon } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
 import { AvatarFallback } from "@radix-ui/react-avatar";
@@ -100,8 +99,8 @@ const MessageContainer = () => {
       return (
         <div key={index}>
           {showDate && (
-            <div className="text-white/80 text-center text-gray my-2 border-t-[2px] border-gray-600 flex justify-center py-3">
-              <div className="border border-white/50 p-[5px] px-3 rounded-md bg-white/10">
+            <div className="text-white/90 font-semibold text-center text-gray my-2 border-t-[2px] border-gray-600 flex justify-center py-3">
+              <div className="border border-white/50 p-[5px] px-3 rounded-md backdrop-blur-md">
                 {moment(message.timestamp).format("LL")}
               </div>
             </div>
@@ -170,7 +169,7 @@ const MessageContainer = () => {
           )}
         </div>
       )}
-      <div className="text-xs text-gray-400 ">
+      <div className="text-xs text-gray-40 ">
         {moment(message.timestamp).format("LT")}
       </div>
     </div>
@@ -298,7 +297,7 @@ const MessageContainer = () => {
 
   return (
     <div
-      className="flex-1 overflow-y-auto no-scrollbar p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw] w-full"
+      className="flex-1 relative overflow-y-auto no-scrollbar p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw] w-full"
       style={{
         backgroundImage: `url(${wallpaper})`,
         backgroundSize: "cover",
