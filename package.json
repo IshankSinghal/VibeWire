@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.12.1",
     "nodemailer": "^6.9.15"
   }
 }

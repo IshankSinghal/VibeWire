@@ -22,6 +22,7 @@ import { HOST, SEARCH_CONTACT } from "@/utils/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAppStore } from "@/store";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const NewDm = () => {
   const [openNewContactModal, setOpenNewContactModal] = useState(false);
@@ -132,15 +133,14 @@ const NewDm = () => {
           )}
           {serchedContacts.length == 0 && (
             <div className="flex-1  rounded-md md:flex md:mt-0 flex-col items-center justify-center duration-1000 transition-all mt-5">
-              <Lottie
-                isClickToPauseDisabled={true}
-                height={100}
-                width={100}
-                options={animationDefaultOPtions}
+              <DotLottieReact
+                src="https://lottie.host/ac992bfe-8408-4be8-964a-b832b9871c70/k8AfAZ80DB.lottie"
+                loop
+                autoplay
+                className="w-72 h-56"
               />
-              <div className="text-opacity-80 text-white flex flex-col gap-5 items-center mt-5 lg:text-2xl text-xl transition-all duration-300 text-center">
-                <h3 className="poppins-medium ">
-                  Hi<span className="text-purple-500">! </span>Search New
+              <div className="text-opacity-80 text-white flex flex-col gap-5 items-center  lg:text-2xl text-xl transition-all duration-300 text-center">
+                <h3 className="poppins-medium ">Search New
                   Contacts.
                 </h3>
               </div>
